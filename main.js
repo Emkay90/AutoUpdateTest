@@ -4,7 +4,7 @@ const devMode = (process.argv || []).indexOf('--dev') !== -1
 
 if (devMode) {
   //lade App Dependencies
-  const nodeModulesPfad = path.join(__dirname, 'C:\Users\Moritz\Desktop\Afl-Dashboard\AutoUpdater_test')
+  const nodeModulesPfad = path.join(__dirname, '..', '..', 'app', 'node_modules')
   require('module').globalPaths.push(nodeModulesPfad)
 }
 

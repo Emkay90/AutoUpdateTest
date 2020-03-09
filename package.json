@@ -3,12 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
-  "dependencies": {},
-  "devDependencies": {
-    "electron": "^8.1.0",
-    "electron-builder": "^22.4.0",
-    "electron-updater": "^4.2.4"
-  },
   "scripts": {
     "start": "electron .",
     "build": "electron-builder build --win --publish never",
@@ -20,5 +14,15 @@
     "url": "https://github.com/Emkay90/AutoUpdateTest.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  
+"devDependencies": {
+  "electron": "^8.1.0",
+  "electron-builder": "^22.4.0"
+  
+},
+"dependencies": {
+  "electron-updater": "^4.2.4"
+}
+
 }
