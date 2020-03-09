@@ -1,5 +1,12 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { autoUpdater } = require('electron-updater');
+const devMode = (process.argv || []).indexOf('--dev') !== -1
+
+if (devMode) {
+  //lade App Dependencies
+  const nodeModulesPfad = path.join(__dirname, 'C:\Users\Moritz\Desktop\Afl-Dashboard\AutoUpdater_test')
+  require('module').globalPaths.push(nodeModulesPfad)
+}
 
 let mainWindow;
 
