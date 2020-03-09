@@ -4,20 +4,21 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
+  },
+  "devDependencies": {
     "electron": "^8.1.0",
     "electron-builder": "^22.4.0",
     "electron-updater": "^2.2.4"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder build --mac --win --publish never",
-"deploy": "electron-builder build --mac --win --publish always",
+    "build": "electron-builder build --win --publish never",
+    "deploy": "electron-builder build --win --publish always",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "http://10.8.85.37:3000/MoKi90/AutoUpdateTest.git"
+    "url": "https://github.com/Emkay90/AutoUpdateTest.git"
   },
   "author": "",
   "license": "ISC"
