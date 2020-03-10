@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-  <title>Electron Auto Update Beispiel</title>
+  <title>Das ist ein Test</title>
   <style>
     body {
       box-sizing: border-box;
@@ -10,7 +10,7 @@
       background-color: #eaeaea;
       text-align: center;
     }
-    #notification {
+  notification {
   position: fixed;
   bottom: 30px;
   left: 30px;
@@ -31,10 +31,10 @@
   <div id="notification" class="hidden">
     <p id="message"></p>
     <button id="close-button" onClick="closeNotification()">
-      Close
+      Schließen
     </button>
     <button id="restart-button" onClick="restartApp()" class="hidden">
-      Restart
+      Neustart
     </button>
   </div>
   <script>
@@ -56,7 +56,7 @@ ipcRenderer.on('update_available', () => {
 });
 ipcRenderer.on('update_downloaded', () => {
   ipcRenderer.removeAllListeners('update_downloaded');
-  message.innerText = 'Update heruntergeladen. Es wird beim nächsten Neustart heruntergeladen. Jetzt neustarten?';
+  message.innerText = 'Update heruntergeladen. Es wird beim nächsten Neustart installiert. Jetzt neustarten?';
   restartButton.classList.remove('hidden');
   notification.classList.remove('hidden');
 });

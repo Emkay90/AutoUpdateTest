@@ -16,7 +16,7 @@ function createWindow () {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-    },
+    }
   });
   mainWindow.loadFile('index.html');
   mainWindow.on('closed', function () {
