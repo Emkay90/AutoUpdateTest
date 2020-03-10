@@ -22,7 +22,7 @@ function createWindow () {
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
-  mainWindow.once('ready-to-show', () => {
+  mainWindow.on('ready-to-show', () => {
     autoUpdater.checkForUpdatesAndNotify();
   });
 }
