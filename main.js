@@ -22,9 +22,7 @@ function createWindow () {
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
-  mainWindow.on('ready-to-show', () => {
-    autoUpdater.checkForUpdatesAndNotify();
-  });
+ 
 }
 
 
@@ -52,6 +50,10 @@ ipcMain.on('app_version', (event) => {
 ipcMain.on('restart_app', () => {
     autoUpdater.quitAndInstall();
   });
+  
+  ipcMain.on('check_for_updates', () => {
+    autoUpdater.checkForUpdatesAndNotify();
+  })
 
 autoUpdater.on('update-available', () => {
     mainWindow.webContents.send('update_available');
