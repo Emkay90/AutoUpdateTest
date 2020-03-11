@@ -27,7 +27,7 @@ function createWindow () {
 }
 
 //AutoUpdater Test
-const server = 'http://192.168.43.125';
+const server = 'https://github.com/Emkay90/AutoUpdateTest.git';
 const feed = `${server}/update/${process.platform}/${app.getVersion()}`
 autoUpdater.setFeedURL(feed)
 setInterval(() => {
