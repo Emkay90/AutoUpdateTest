@@ -73,7 +73,7 @@ notification.classList.remove('hidden');
 
 app.on('ready', () => {
   createWindow();
-  autoSearch();
+
 });
 
 
@@ -90,8 +90,5 @@ function checkForUpdates() {
   
 }
 
-function autoSearch () {
-  ipcRenderer.send('auto_Search');
-}
   </script>
 </body>

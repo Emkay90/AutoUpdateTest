@@ -31,6 +31,7 @@ function createWindow () {
 
 app.on('ready', () => {
   createWindow();
+  auto_Search();
 });
 
 
@@ -59,7 +60,7 @@ ipcMain.on('restart_app', () => {
 
   })
 
-  ipcMain.on ('auto_Search'), () => {
+    function auto_Search () {
     const server = 'https://github.com/Emkay90/AutoUpdateTest.git';
     const feed = `${server}/update/${process.platform}/${app.getVersion()}`
     autoUpdater.setFeedURL(feed)
@@ -67,7 +68,7 @@ ipcMain.on('restart_app', () => {
       autoUpdater.checkForUpdates()
       autoUpdater.checkForUpdatesAndNotify();
      }, 60000)
-  }
+    }
 
 
 
