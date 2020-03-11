@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const devMode = (process.argv || []).indexOf('--dev') !== -1
 
+
 if (devMode) {
   //lade App Dependencies
   const nodeModulesPfad = path.join(__dirname, '..', '..', 'app', 'node_modules')
@@ -25,11 +26,18 @@ function createWindow () {
  
 }
 
-
+//AutoUpdater Test
+const server = 'http://192.168.43.125';
+const feed = `${server}/update/${process.platform}/${app.getVersion()}`
+autoUpdater.setFeedURL(feed)
+setInterval(() => {
+  autoUpdater.checkForUpdates()
+ }, 60000)
 
 app.on('ready', () => {
   createWindow();
 });
+
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
@@ -61,4 +69,6 @@ autoUpdater.on('update-available', () => {
   autoUpdater.on('update-downloaded', () => {
     mainWindow.webContents.send('update_downloaded');
   });
+
+  autoUpdater.autoDownload = true
 

@@ -1,6 +1,6 @@
 {
   "name": "autoupdater_test",
-  "version": "1.0.9",
+  "version": "1.1.2",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -8,9 +8,9 @@
     "build": "electron-builder build --win --publish never",
     "deploy": "electron-builder build --win --publish always"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Emkay90/AutoUpdateTest.git"
+  "publish": {
+    "provider": "generic",
+    "url": "http://10.8.85.37:80"
   },
   "author": "",
   "license": "ISC",
