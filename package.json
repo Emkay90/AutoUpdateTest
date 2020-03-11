@@ -9,8 +9,8 @@
     "deploy": "electron-builder build --win --publish always"
   },
   "publish": {
-    "provider": "generic",
-    "url": "http://10.8.85.37:80"
+    "provider": "github",
+    "url": "http://192.168.43.125"
   },
   "author": "",
   "license": "ISC",
