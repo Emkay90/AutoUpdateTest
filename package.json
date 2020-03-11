@@ -8,9 +8,9 @@
     "build": "electron-builder build --win --publish never",
     "deploy": "electron-builder build --win --publish always"
   },
-  "publish": {
-    "provider": "github",
-    "url": "http://192.168.43.125"
+  "repository": {
+    "type" : "github",
+    "url" : "https://github.com/Emkay90/AutoUpdateTest.git"
   },
   "author": "",
   "license": "ISC",
