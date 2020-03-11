@@ -43,10 +43,13 @@
   </div>
   <script>
    const { ipcRenderer } = require('electron');
+   const { autoUpdater } = require('electron-updater');
 const version = document.getElementById('version');
 const notification = document.getElementById('notification');
 const message = document.getElementById('message');
 const restartButton = document.getElementById('restart-button');
+const server = 'https://github.com/Emkay90/AutoUpdateTest.git';
+const feed = `${server}/update/${process.platform}/${app.getVersion()}`
 
 
 ipcRenderer.send('app_version');
@@ -67,6 +70,15 @@ ipcRenderer.removeAllListeners('update_downloaded');
 message.innerText = 'Update heruntergeladen. Es wird beim nächsten Neustart installiert. Jetzt neustarten?';
 restartButton.classList.remove('hidden');
 notification.classList.remove('hidden');
+});
+
+autoUpdater.setFeedURL(feed)
+setInterval(() => {
+  autoUpdater.checkForUpdates()
+ }, 60000)
+
+app.on('ready', () => {
+  createWindow();
 });
 
 
