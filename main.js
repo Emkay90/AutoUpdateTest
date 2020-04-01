@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const devMode = (process.argv || []).indexOf('--dev') !== -1
 
@@ -42,6 +42,7 @@ app.on('window-all-closed', function () {
 app.on('activate', function () {
   if (mainWindow === null) {
     createWindow();
+  
   }
 });
 
@@ -55,7 +56,6 @@ ipcMain.on('restart_app', () => {
   
   ipcMain.on('check_for_updates', () => {
     autoUpdater.checkForUpdatesAndNotify();
-    auto_Search();
 
   })
 
@@ -76,9 +76,26 @@ ipcMain.on('restart_app', () => {
 autoUpdater.on('update-available', () => {
     mainWindow.webContents.send('update_available');
   });
-  autoUpdater.on('update-downloaded', () => {
+  autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
     mainWindow.webContents.send('update_downloaded');
-  });
+  
+  let dialogOpts = {
+    type: 'Info',
+    buttons : ['Neustart', 'Später'],
+    title: 'Dashboard-Update',
+    message: process.platform === 'win32' ? releaseNotes : releaseName,
+    detail: 'Eine neues Update wurde heruntergeladen. Starten Sie das Dashboard neu '
+  }
+
+  dialog.showMessageBox(dialogOpts).then((returnValue) => {
+    if (returnValue.response === 0) autoUpdater.quitAndInstall()
+  })
+});
+
+autoUpdater.on ('error', message => {
+  console.error('Problem beim updaten des Dashboards')
+  console.error(message)
+})
 
   autoUpdater.autoDownload = true
 
