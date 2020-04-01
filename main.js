@@ -29,7 +29,6 @@ function createWindow () {
 
 app.on('ready', () => {
   createWindow();
-  auto_Search();
 });
 
 
@@ -50,6 +49,14 @@ ipcMain.on('app_version', (event) => {
   event.sender.send('app_version', { version: app.getVersion() });
 });
 
+const server = 'https://github.com/Emkay90/AutoUpdateTest.git';
+const feed = `${server}/update/${process.platform}/${app.getVersion()}`
+autoUpdater.setFeedURL(feed)
+setInterval(() => {
+  autoUpdater.checkForUpdates()
+ }, 20000)
+
+
 ipcMain.on('restart_app', () => {
     autoUpdater.quitAndInstall();
   });
@@ -58,19 +65,6 @@ ipcMain.on('restart_app', () => {
     autoUpdater.checkForUpdatesAndNotify();
 
   })
-
-
-
-    function auto_Search () {
-    const server = 'https://github.com/Emkay90/AutoUpdateTest.git';
-    const feed = `${server}/update/${process.platform}/${app.getVersion()}`
-    autoUpdater.setFeedURL(feed)
-    setInterval(() => {
-      autoUpdater.checkForUpdates()
-      autoUpdater.checkForUpdatesAndNotify();
-     }, 60000)
-    }
-
 
 
 autoUpdater.on('update-available', () => {
