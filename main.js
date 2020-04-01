@@ -29,6 +29,7 @@ function createWindow () {
 
 app.on('ready', () => {
   createWindow();
+  checkUpdate();
 });
 
 
@@ -41,7 +42,7 @@ app.on('window-all-closed', function () {
 app.on('activate', function () {
   if (mainWindow === null) {
     createWindow();
-    checkUpdate();
+   
   
   }
 });
@@ -59,19 +60,17 @@ setInterval(() => {
 }
 
 
-ipcMain.on('restart_app', () => {
-    autoUpdater.quitAndInstall();
-  });
+//ipcMain.on('restart_app', () => {
+  // autoUpdater.quitAndInstall();
+  //});
   
-  ipcMain.on('check_for_updates', () => {
-    autoUpdater.checkForUpdatesAndNotify();
+  //ipcMain.on('check_for_updates', () => {
+    //autoUpdater.checkForUpdatesAndNotify();
 
-  })
+  //})
 
 
-autoUpdater.on('update-available', () => {
-    mainWindow.webContents.send('update_available');
-  });
+
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
   //  mainWindow.webContents.send('update_downloaded');
   
@@ -92,6 +91,10 @@ autoUpdater.on ('error', message => {
   console.error('Problem beim updaten des Dashboards')
   console.error(message)
 })
+
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update_available');
+});
 
   autoUpdater.autoDownload = true
 
