@@ -41,6 +41,7 @@ app.on('window-all-closed', function () {
 app.on('activate', function () {
   if (mainWindow === null) {
     createWindow();
+    checkUpdate();
   
   }
 });
@@ -48,13 +49,14 @@ app.on('activate', function () {
 ipcMain.on('app_version', (event) => {
   event.sender.send('app_version', { version: app.getVersion() });
 });
-
+function checkUpdate () {
 const server = 'https://github.com/Emkay90/AutoUpdateTest.git';
 const feed = `${server}/update/${process.platform}/${app.getVersion()}`
 autoUpdater.setFeedURL(feed)
 setInterval(() => {
   autoUpdater.checkForUpdates()
  }, 20000)
+}
 
 
 ipcMain.on('restart_app', () => {
@@ -71,7 +73,7 @@ autoUpdater.on('update-available', () => {
     mainWindow.webContents.send('update_available');
   });
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-    mainWindow.webContents.send('update_downloaded');
+  //  mainWindow.webContents.send('update_downloaded');
   
   let dialogOpts = {
     type: 'Info',
