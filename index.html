@@ -29,10 +29,10 @@
   <h1>Das ist der 5. Test für die automatische Suche</h1>
   <p id="version"></p>
   <p Prüfe auf Updates></p>
-  <button id = "Check" onclick="checkForUpdates()">
+  <!-- <button id = "Check" onclick="checkForUpdates()">
     Pruefen
-  </button>
-  <div id="notification" class="hidden">
+  </button> -->
+  <!-- <div id="notification" class="hidden">
     <p id="message"></p>
     <button id="close-button" onClick="closeNotification()">
       Schließen
@@ -40,7 +40,7 @@
     <button id="restart-button" onClick="restartApp()" class="hidden">
       Neustart
     </button>
-  </div>
+  </div> -->
   <script>
 const { ipcRenderer } = require('electron');
 const version = document.getElementById('version');
@@ -56,19 +56,19 @@ ipcRenderer.on('app_version', (event, arg) => {
   version.innerText = 'Version ' + arg.version;
 });
 
-ipcRenderer.on('update_available', () => {
-ipcRenderer.removeAllListeners('update_available');
-message.innerText = 'Neues Update verfügbar. Lade herunter...';
-notification.classList.remove('hidden');
-});
+// ipcRenderer.on('update-available', () => {
+// ipcRenderer.removeAllListeners('update_available');
+// message.innerText = 'Neues Update verfügbar. Lade herunter...';
+// notification.classList.remove('hidden');
+// });
 
 
-ipcRenderer.on('update_downloaded', () => {
-ipcRenderer.removeAllListeners('update_downloaded');
-message.innerText = 'Update heruntergeladen. Es wird beim nächsten Neustart installiert. Jetzt neustarten?';
-restartButton.classList.remove('hidden');
-notification.classList.remove('hidden');
-});
+// ipcRenderer.on('update-downloaded', () => {
+// ipcRenderer.removeAllListeners('update_downloaded');
+// message.innerText = 'Update heruntergeladen. Es wird beim nächsten Neustart installiert. Jetzt neustarten?';
+// restartButton.classList.remove('hidden');
+// notification.classList.remove('hidden');
+// });
 
 
 function closeNotification() {
@@ -80,7 +80,7 @@ ipcRenderer.send('restart_app');
 
 function checkForUpdates() {
     
-    ipcRenderer.send('check_for_updates');
+    ipcRenderer.send('check-for-update');
   
 }
 
