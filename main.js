@@ -10,6 +10,13 @@ if (devMode) {
 }
 
 let mainWindow;
+let updateWindow;
+
+function sendStatustoWindow () {
+  log.info(text);
+  mainWindow.webContents.send('message', 'text');
+}
+
 
 function createWindow () {
   mainWindow = new BrowserWindow({
@@ -27,7 +34,10 @@ function createWindow () {
 }
 
 
-app.on('ready', () => {
+
+
+
+app.on('ready', function() {
   createWindow();
   checkUpdate();
 });
@@ -55,7 +65,7 @@ const server = 'https://github.com/Emkay90/AutoUpdateTest.git';
 const feed = `${server}/update/${process.platform}/${app.getVersion()}`
 autoUpdater.setFeedURL(feed)
 setInterval(() => {
-  autoUpdater.checkForUpdates()
+  autoUpdater.checkForUpdatesAndNotify()
  }, 20000)
 }
 
@@ -71,7 +81,17 @@ setInterval(() => {
 
 
 
-  autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+
+
+autoUpdater.on('checking-for-update', () => {
+  sendStatustoWindow('Suche nach Updates')
+});
+
+autoUpdater.on('update-available', (info) => {
+  sendStatustoWindow('Update verfuegbar')
+});
+
+autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
   //  mainWindow.webContents.send('update_downloaded');
   
   let dialogOpts = {
@@ -92,9 +112,6 @@ autoUpdater.on ('error', message => {
   console.error(message)
 })
 
-autoUpdater.on('update-available', () => {
-  mainWindow.webContents.send('update_available');
-});
 
   autoUpdater.autoDownload = true
 
