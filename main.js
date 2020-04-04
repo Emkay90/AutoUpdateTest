@@ -23,11 +23,9 @@ function sendStatustoWindow () {
 
 function checkUpdate () {
   autoUpdater.setFeedURL(feed)
+  console.info('Suche alle 10 sek nach Updates')
   setInterval(() => {
-    console.log('Suche alle 10 sek nach Updates')
     autoUpdater.checkForUpdates()
-    
-  
    }, 10000)
   }
   
@@ -78,18 +76,18 @@ checkUpdate();
 
 autoUpdater.on('checking-for-update', () => {
   sendStatustoWindow('Suche nach Updates')
-  console.log('Suche nach Updates')
+  console.info('Suche nach Updates')
 });
 
 autoUpdater.on('update-available', (info) => {
   sendStatustoWindow('Update verfuegbar')
-  console.log('Update verfuegbar')
+  console.info('Update verfuegbar')
 
 });
 
 autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
     mainWindow.webContents.send('Update heruntergeladen');
-    console.log('Update heruntergeladen')
+    console.info('Update heruntergeladen')
 
   
   // let dialogOpts = {
