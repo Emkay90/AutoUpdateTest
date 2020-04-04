@@ -22,13 +22,8 @@ function sendStatustoWindow () {
 };
 
 function checkUpdate () {
-  autoUpdater.setFeedURL(feed)
-  console.info('Suche alle 10 sek nach Updates')
-  setInterval(() => {
-    autoUpdater.checkForUpdates()
-   }, 10000)
-  }
   
+  }
 
 
 function createWindow () {
@@ -74,6 +69,12 @@ ipcMain.on('app_version', (event) => {
 
 checkUpdate();
 
+autoUpdater.setFeedURL(feed)
+  console.info('Suche alle 20 sek nach Updates')
+  setInterval(() => {
+    autoUpdater.checkForUpdates()
+   }, 20000)
+
 autoUpdater.on('checking-for-update', () => {
   sendStatustoWindow('Suche nach Updates')
   console.info('Suche nach Updates')
@@ -106,8 +107,8 @@ autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
 autoUpdater.on ('error', message => {
   console.error('Problem beim updaten des Dashboards')
   console.error(message)
+   
 })
-
   autoUpdater.autoDownload = true
 
 
