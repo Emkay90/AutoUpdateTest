@@ -8,6 +8,7 @@
     --npm install electron
     --npm install --save-dev electron electron-builder
     --npm install --save electron-updater
+    --npm install electron-log
 
     für update:
     --git add -p .

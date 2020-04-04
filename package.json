@@ -9,8 +9,8 @@
     "deploy": "electron-builder build --win --publish always"
   },
   "repository": {
-    "type" : "github",
-    "url" : "https://github.com/Emkay90/AutoUpdateTest.git"
+    "type": "github",
+    "url": "https://github.com/Emkay90/AutoUpdateTest.git"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "electron-builder": "^22.4.0"
   },
   "dependencies": {
+    "electron-log": "^4.1.1",
     "electron-updater": "^4.2.4"
   }
 }

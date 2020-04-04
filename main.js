@@ -1,9 +1,15 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
+const log = require('electron-log');
 const devMode = (process.argv || []).indexOf('--dev') !== -1
 const server = 'https://github.com/Emkay90/AutoUpdateTest.git';
 const feed = `${server}/update/${process.platform}/${app.getVersion()}`
 
+
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
+log.info('App startet');
 
 if (devMode) {
   //lade App Dependencies
@@ -14,7 +20,7 @@ if (devMode) {
 let mainWindow;
 
 
-function sendStatustoWindow () {
+function sendStatustoWindow (text) {
   log.info(text);
   if(mainWindow) {
   mainWindow.webContents.send('message', 'text');
@@ -70,25 +76,23 @@ ipcMain.on('app_version', (event) => {
 checkUpdate();
 
 autoUpdater.setFeedURL(feed)
-  console.info('Suche alle 20 sek nach Updates')
+  console.info('Suche alle 10 sek nach Updates')
   setInterval(() => {
     autoUpdater.checkForUpdates()
-   }, 20000)
+   }, 10000)
 
 autoUpdater.on('checking-for-update', () => {
   sendStatustoWindow('Suche nach Updates')
-  console.info('Suche nach Updates')
 });
 
 autoUpdater.on('update-available', (info) => {
   sendStatustoWindow('Update verfuegbar')
-  console.info('Update verfuegbar')
+
 
 });
 
 autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
     mainWindow.webContents.send('Update heruntergeladen');
-    console.info('Update heruntergeladen')
 
   
   // let dialogOpts = {
