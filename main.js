@@ -12,12 +12,14 @@ if (devMode) {
 }
 
 let mainWindow;
-let updateWindow;
+
 
 function sendStatustoWindow () {
   log.info(text);
+  if(mainWindow) {
   mainWindow.webContents.send('message', 'text');
 }
+};
 
 function checkUpdate () {
   autoUpdater.setFeedURL(feed)
