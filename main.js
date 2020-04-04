@@ -71,14 +71,7 @@ setInterval(() => {
 }
 
 
-//ipcMain.on('restart_app', () => {
-  // autoUpdater.quitAndInstall();
-  //});
-  
-  //ipcMain.on('check_for_updates', () => {
-    //autoUpdater.checkForUpdatesAndNotify();
 
-  //})
 
 
 
@@ -93,19 +86,19 @@ autoUpdater.on('update-available', (info) => {
 });
 
 autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-  //  mainWindow.webContents.send('update_downloaded');
+    mainWindow.webContents.send('Update heruntergeladen');
   
-  let dialogOpts = {
-    type: 'Info',
-    buttons : ['Neustart', 'Später'],
-    title: 'Dashboard-Update',
-    message: process.platform === 'win32' ? releaseNotes : releaseName,
-    detail: 'Eine neues Update wurde heruntergeladen. Starten Sie das Dashboard neu '
-  }
+  // let dialogOpts = {
+  //   type: 'Info',
+  //   buttons : ['Neustart', 'Später'],
+  //   title: 'Dashboard-Update',
+  //   message: process.platform === 'win32' ? releaseNotes : releaseName,
+  //   detail: 'Eine neues Update wurde heruntergeladen. Starten Sie das Dashboard neu '
+  // }
 
-  dialog.showMessageBox(dialogOpts).then((returnValue) => {
-    if (returnValue.response === 0) autoUpdater.quitAndInstall()
-  })
+  // dialog.showMessageBox(dialogOpts).then((returnValue) => {
+  //   if (returnValue.response === 0) autoUpdater.quitAndInstall()
+  // })
 });
 
 autoUpdater.on ('error', message => {
@@ -113,6 +106,16 @@ autoUpdater.on ('error', message => {
   console.error(message)
 })
 
+  
+ipcMain.on('check-for-updates', () => {
+  checkUpdate();
+
+})
+
+
+// ipcMain.on('restart_app', () => {
+//    autoUpdater.quitAndInstall();
+// });
 
   autoUpdater.autoDownload = true
 
