@@ -19,6 +19,17 @@ function sendStatustoWindow () {
   mainWindow.webContents.send('message', 'text');
 }
 
+function checkUpdate () {
+  autoUpdater.setFeedURL(feed)
+  setInterval(() => {
+    console.log('Suche alle 10 sek nach Updates')
+    autoUpdater.checkForUpdates()
+    
+  
+   }, 10000)
+  }
+  
+
 
 function createWindow () {
   mainWindow = new BrowserWindow({
@@ -42,6 +53,42 @@ function createWindow () {
 app.on('ready', function() {
   createWindow();
   checkUpdate();
+  
+  autoUpdater.on('checking-for-update', () => {
+    sendStatustoWindow('Suche nach Updates')
+    console.log('Suche nach Updates')
+  });
+  
+  autoUpdater.on('update-available', (info) => {
+    sendStatustoWindow('Update verfuegbar')
+    console.log('Update verfuegbar')
+  
+  });
+  
+  autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+      mainWindow.webContents.send('Update heruntergeladen');
+      console.log('Update heruntergeladen')
+  
+    
+    // let dialogOpts = {
+    //   type: 'Info',
+    //   buttons : ['Neustart', 'Später'],
+    //   title: 'Dashboard-Update',
+    //   message: process.platform === 'win32' ? releaseNotes : releaseName,
+    //   detail: 'Eine neues Update wurde heruntergeladen. Starten Sie das Dashboard neu '
+    // }
+  
+    // dialog.showMessageBox(dialogOpts).then((returnValue) => {
+    //   if (returnValue.response === 0) autoUpdater.quitAndInstall()
+    // })
+  });
+  
+  autoUpdater.on ('error', message => {
+    console.error('Problem beim updaten des Dashboards')
+    console.error(message)
+  })
+
+    autoUpdater.autoDownload = true
 });
 
 
@@ -63,12 +110,6 @@ ipcMain.on('app_version', (event) => {
   event.sender.send('app_version', { version: app.getVersion() });
 });
 
-function checkUpdate () {
-autoUpdater.setFeedURL(feed)
-setInterval(() => {
-  autoUpdater.checkForUpdatesAndNotify()
- }, 20000)
-}
 
 
 
@@ -77,50 +118,5 @@ setInterval(() => {
 
 
 
-autoUpdater.on('checking-for-update', () => {
-  sendStatustoWindow('Suche nach Updates')
-  console.log('Suche nach Updates')
-});
 
-autoUpdater.on('update-available', (info) => {
-  sendStatustoWindow('Update verfuegbar')
-  console.log('Update verfuegbar')
-
-});
-
-autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-    mainWindow.webContents.send('Update heruntergeladen');
-    console.log('Update heruntergeladen')
-
-  
-  // let dialogOpts = {
-  //   type: 'Info',
-  //   buttons : ['Neustart', 'Später'],
-  //   title: 'Dashboard-Update',
-  //   message: process.platform === 'win32' ? releaseNotes : releaseName,
-  //   detail: 'Eine neues Update wurde heruntergeladen. Starten Sie das Dashboard neu '
-  // }
-
-  // dialog.showMessageBox(dialogOpts).then((returnValue) => {
-  //   if (returnValue.response === 0) autoUpdater.quitAndInstall()
-  // })
-});
-
-autoUpdater.on ('error', message => {
-  console.error('Problem beim updaten des Dashboards')
-  console.error(message)
-})
-
-  
-ipcMain.on('check-for-updates', () => {
-  checkUpdate();
-
-})
-
-
-// ipcMain.on('restart_app', () => {
-//    autoUpdater.quitAndInstall();
-// });
-
-  autoUpdater.autoDownload = true
 
