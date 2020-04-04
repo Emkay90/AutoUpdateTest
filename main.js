@@ -79,14 +79,19 @@ setInterval(() => {
 
 autoUpdater.on('checking-for-update', () => {
   sendStatustoWindow('Suche nach Updates')
+  console.log('Suche nach Updates')
 });
 
 autoUpdater.on('update-available', (info) => {
   sendStatustoWindow('Update verfuegbar')
+  console.log('Update verfuegbar')
+
 });
 
 autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
     mainWindow.webContents.send('Update heruntergeladen');
+    console.log('Update heruntergeladen')
+
   
   // let dialogOpts = {
   //   type: 'Info',
