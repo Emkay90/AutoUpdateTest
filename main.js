@@ -1,6 +1,8 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const devMode = (process.argv || []).indexOf('--dev') !== -1
+const server = 'https://github.com/Emkay90/AutoUpdateTest.git';
+const feed = `${server}/update/${process.platform}/${app.getVersion()}`
 
 
 if (devMode) {
@@ -60,9 +62,8 @@ app.on('activate', function () {
 ipcMain.on('app_version', (event) => {
   event.sender.send('app_version', { version: app.getVersion() });
 });
+
 function checkUpdate () {
-const server = 'https://github.com/Emkay90/AutoUpdateTest.git';
-const feed = `${server}/update/${process.platform}/${app.getVersion()}`
 autoUpdater.setFeedURL(feed)
 setInterval(() => {
   autoUpdater.checkForUpdatesAndNotify()
