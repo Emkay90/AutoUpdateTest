@@ -26,7 +26,7 @@
   </style>
 </head>
 <body>
-  <h1>Das ist der finale  Test für die automatische Suche</h1>
+  <h1>Das ist der 1. finale  Test für die automatische Suche</h1>
   <p id="version"></p>
   <div id="message"></div>
   <p Prüfe auf Updates></p>
@@ -60,7 +60,7 @@ ipcRenderer.on('app_version', (event, arg) => {
 ipcRenderer.on('message', function(event, text) {
   let container = document.getElementById('message');
   let message = document.createElement('div');
-  message.innerHTML = text;
+  message.innerHTML = "Neues Update";
   container.appendChild(message);
 })
 
