@@ -1,12 +1,16 @@
 {
   "name": "autoupdater_test",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "build": "electron-builder build --win --publish never",
     "deploy": "electron-builder build --win --publish always"
+  },
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
   },
   "repository": {
     "type": "github",
