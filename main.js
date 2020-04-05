@@ -42,7 +42,7 @@ function createWindow () {
     mainWindow = null;
   });
 
-  mainWindow.once('ready-to-show', () => {
+  mainWindow.on('ready-to-show', () => {
   
   });
  
@@ -90,6 +90,10 @@ checkUpdate();
 
 ipcMain.on('check_for_updates', () => {
   autoUpdater.checkForUpdatesAndNotify();
+});
+
+ipcMain.on('restart_app', () => {
+  autoUpdater.quitAndInstall();
 });
 // autoUpdater.on('checking-for-update', () => {
 //   sendStatustoWindow('Suche nach Updates')
