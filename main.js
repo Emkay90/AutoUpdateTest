@@ -2,8 +2,7 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
 const devMode = (process.argv || []).indexOf('--dev') !== -1
-const server = 'https://github.com/Emkay90/AutoUpdateTest.git';
-const feed = `${server}/update/${process.platform}/${app.getVersion()}`
+
 
 
 
@@ -27,9 +26,7 @@ function sendStatustoWindow (text) {
 }
 };
 
-function checkUpdate () {
-  
-  }
+
 
 
 function createWindow () {
@@ -44,22 +41,29 @@ function createWindow () {
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
+
+  mainWindow.once('ready-to-show', () => {
+  
+  });
  
 }
 
 
+function checkUpdate () {
+  
+  }
 
 
-
-app.on('ready', function() {
+app.on('ready', () => {
   createWindow();
-  mainWindow.once('ready-to-show', () => {
-    autoUpdater.setFeedURL(feed)
+  const server = 'https://github.com/Emkay90/AutoUpdateTest.git';
+  const feed = `${server}/update/${process.platform}/${app.getVersion()}`
+  autoUpdater.setFeedURL(feed)
   console.log('Suche alle 10 sek nach Updates')
   setInterval(() => {
     autoUpdater.checkForUpdatesAndNotify()
    }, 10000)
-  });
+
   
 });
 
@@ -75,6 +79,8 @@ app.on('activate', function () {
     createWindow();
   }
 });
+
+
 
 ipcMain.on('app_version', (event) => {
   event.sender.send('app_version', { version: app.getVersion() });
