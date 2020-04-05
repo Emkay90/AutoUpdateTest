@@ -26,9 +26,14 @@
   </style>
 </head>
 <body>
-  <h1>Das ist der 2. finale  Test für die automatische Suche</h1>
+  <h1>Das ist der finale  Test für die automatische Suche</h1>
   <p id="version"></p>
-  <div id="message"></div>
+  <div id="notification" class="hidden">
+    <p id="close"><span style="margin-left:96%"><i class="fas fa-times"></i></span></p>
+    <div class="message">
+        <p id="icon"><span class="icon"><i class="fas fa-info-circle"></i></span></p>
+        <p id="msg" class="msg"><strong>&nbsp;Update ist vefügbar!</strong></p>
+    </div>
   <p Prüfe auf Updates></p>
   <!-- <button id = "Check" onclick="checkForUpdates()">
     Pruefen
@@ -64,19 +69,19 @@ ipcRenderer.on('message', function(event, text) {
   container.appendChild(message);
 })
 
-// ipcRenderer.on('update-available', () => {
-// ipcRenderer.removeAllListeners('update_available');
-// message.innerText = 'Neues Update verfügbar. Lade herunter...';
-// notification.classList.remove('hidden');
-// });
+ ipcRenderer.on('update-available', () => {
+ ipcRenderer.removeAllListeners('update_available');
+ message.innerText = 'Neues Update verfügbar. Lade herunter...';
+ notification.classList.remove('hidden');
+ });
 
 
-// ipcRenderer.on('update-downloaded', () => {
-// ipcRenderer.removeAllListeners('update_downloaded');
-// message.innerText = 'Update heruntergeladen. Es wird beim nächsten Neustart installiert. Jetzt neustarten?';
-// restartButton.classList.remove('hidden');
-// notification.classList.remove('hidden');
-// });
+ ipcRenderer.on('update-downloaded', () => {
+ ipcRenderer.removeAllListeners('update_downloaded');
+ message.innerText = 'Update heruntergeladen. Es wird beim nächsten Neustart installiert. Jetzt neustarten?';
+ //restartButton.classList.remove('hidden');
+ notification.classList.remove('hidden');
+ });
 
 
 function closeNotification() {
@@ -87,10 +92,9 @@ ipcRenderer.send('restart_app');
 }
 
 function checkForUpdates() {
-    
-    ipcRenderer.send('check-for-update');
-  
-}
+    ipcRenderer.send('check_for_updates');
+    console.log("auf updates wurde geprüft.");
+  }
 
   </script>
 </body>

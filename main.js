@@ -53,6 +53,13 @@ function createWindow () {
 
 app.on('ready', function() {
   createWindow();
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.setFeedURL(feed)
+  console.log('Suche alle 10 sek nach Updates')
+  setInterval(() => {
+    autoUpdater.checkForUpdatesAndNotify()
+   }, 10000)
+  });
   
 });
 
@@ -75,15 +82,12 @@ ipcMain.on('app_version', (event) => {
 
 checkUpdate();
 
-autoUpdater.setFeedURL(feed)
-  console.info('Suche alle 10 sek nach Updates')
-  setInterval(() => {
-    autoUpdater.checkForUpdates()
-   }, 10000)
-
-autoUpdater.on('checking-for-update', () => {
-  sendStatustoWindow('Suche nach Updates')
+ipcMain.on('check_for_updates', () => {
+  autoUpdater.checkForUpdatesAndNotify();
 });
+// autoUpdater.on('checking-for-update', () => {
+//   sendStatustoWindow('Suche nach Updates')
+// });
 
 autoUpdater.on('update-available', (info) => {
   sendStatustoWindow('Update verfuegbar')
@@ -92,20 +96,25 @@ autoUpdater.on('update-available', (info) => {
 });
 
 autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-    mainWindow.webContents.send('Update heruntergeladen');
+    // mainWindow.webContents.send('Update heruntergeladen');
 
   
-  // let dialogOpts = {
-  //   type: 'Info',
-  //   buttons : ['Neustart', 'Später'],
-  //   title: 'Dashboard-Update',
-  //   message: process.platform === 'win32' ? releaseNotes : releaseName,
-  //   detail: 'Eine neues Update wurde heruntergeladen. Starten Sie das Dashboard neu '
-  // }
+   let dialogOpts = {
+     type: 'Info',
+     buttons : ['Neustart', 'Später'],
+     title: 'Dashboard-Update',
+     message: process.platform === 'win32' ? releaseNotes : releaseName,
+     detail: 'Eine neues Update wurde heruntergeladen. Starten Sie das Dashboard neu '
+   }
 
-  // dialog.showMessageBox(dialogOpts).then((returnValue) => {
-  //   if (returnValue.response === 0) autoUpdater.quitAndInstall()
-  // })
+   dialog.showMessageBox(dialogOpts).then((returnValue) => {
+     if (returnValue.response === 0) autoUpdater.quitAndInstall()
+   })
+});
+
+autoUpdater.on('update-not-available', (event) => {
+  mainWindow.webContents.send('Kein Update verfuegbar');
+  sendStatusToWindow(event);
 });
 
 autoUpdater.on ('error', message => {
