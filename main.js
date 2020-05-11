@@ -41,17 +41,8 @@ function createWindow () {
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
-
-  mainWindow.on('ready-to-show', () => {
-  
-  });
  
 }
-
-
-function checkUpdate () {
-  
-  }
 
 
 app.on('ready', () => {
@@ -86,7 +77,6 @@ ipcMain.on('app_version', (event) => {
   event.sender.send('app_version', { version: app.getVersion() });
 });
 
-checkUpdate();
 
 ipcMain.on('check_for_updates', () => {
   autoUpdater.checkForUpdatesAndNotify();
@@ -131,7 +121,7 @@ autoUpdater.on ('error', message => {
   console.error('Problem beim updaten des Dashboards')
   console.error(message)
    
-})
+});
   autoUpdater.autoDownload = true
 
 

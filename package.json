@@ -4,20 +4,15 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron --inspect=5858 C:/Users/Moritz/AppData/Local/Programs/autoupdater_test/autoupdater_test.exe",
+    "start": "electron .",
     "build": "electron-builder build --win --publish never",
     "deploy": "electron-builder build --win --publish always"
-  },
-  "publish": {
-    "provider": "github",
-    "private": "true",
-    "releaseType": "release"
   },
   "repository": {
     "type": "github",
     "url": "https://github.com/Emkay90/AutoUpdateTest.git"
   },
-  "author": "",
+  "author": "MK",
   "license": "ISC",
   "devDependencies": {
     "electron": "^8.1.0",
