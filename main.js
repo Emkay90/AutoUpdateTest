@@ -46,7 +46,6 @@ function createWindow () {
 
 
 app.on('ready', () => {
-  createWindow();
   const server = 'https://github.com/Emkay90/AutoUpdateTest.git';
   const feed = `${server}/update/${process.platform}/${app.getVersion()}`
   autoUpdater.setFeedURL(feed)
@@ -55,6 +54,8 @@ app.on('ready', () => {
     autoUpdater.checkForUpdatesAndNotify()
    }, 10000)
 
+  createWindow();
+ 
   
 });
 
